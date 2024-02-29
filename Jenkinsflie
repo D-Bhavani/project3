@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    tools {
+        jdk 'jdk8' // Define the JDK tool installation named 'jdk8' configured in Jenkins
+        maven 'maven3' // Define the Maven tool installation named 'maven3' configured in Jenkins
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from version control
+                git branch: 'main', url: 'https://github.com/D-Bhavani/project3.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Compile the Java code
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run unit tests
+                sh 'mvn test'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                // Package the application (e.g., create a JAR file)
+                sh 'mvn package'
+            }
+        }
+    }
+}
+
